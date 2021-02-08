@@ -1,8 +1,11 @@
-package modelo;
+package modeloDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import config.Conexion;
+import modelo.DetalleVentas;
+import modelo.Ventas;
 
 public class VentasDAO {
 
@@ -42,7 +45,7 @@ public class VentasDAO {
         return idv;
     }
     public int GuardarVentas(Ventas v){       
-        String sql="insert into Ventas(IdCliente, IdVendedor,NumeroSerie,FechaVentas,Monto,Estado)values(?,?,?,?,?,?)";
+        String sql="insert into Ventas(IdCliente, IdEmpleado,NumeroSerie,FechaVentas,Monto,Estado)values(?,?,?,?,?,?)";
         try {
             con=cn.Conectar();
             ps=con.prepareStatement(sql);

@@ -2,9 +2,11 @@ package vistas;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Vendedor;
-import modelo.VendedorDAO;
+import modeloDAO.VendedorDAO;
 
 public class VendedorForm extends javax.swing.JInternalFrame {
 
@@ -21,6 +23,14 @@ public class VendedorForm extends javax.swing.JInternalFrame {
     void listarVendedor() {
         modelo = (DefaultTableModel) tablaVendedor.getModel();
         List<Vendedor> lista = dao.listarVendedor();
+
+        DefaultTableCellRenderer render=new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        tablaVendedor.getColumnModel().getColumn(0).setCellRenderer(render);
+        tablaVendedor.getColumnModel().getColumn(1).setCellRenderer(render);
+        tablaVendedor.getColumnModel().getColumn(3).setCellRenderer(render);
+        tablaVendedor.getColumnModel().getColumn(4).setCellRenderer(render);
+
         Object[] object = new Object[5];
         for (int i = 0; i < lista.size(); i++) {
             object[0] = lista.get(i).getId();
@@ -32,6 +42,7 @@ public class VendedorForm extends javax.swing.JInternalFrame {
         }
         tablaVendedor.setModel(modelo);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -68,6 +79,7 @@ public class VendedorForm extends javax.swing.JInternalFrame {
                 "ID", "DNI", "NOMBRES", "TELEFONO", "ESTADO"
             }
         ));
+        tablaVendedor.setRowHeight(25);
         tablaVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaVendedorMouseClicked(evt);
@@ -239,7 +251,7 @@ public class VendedorForm extends javax.swing.JInternalFrame {
         if (fila >= 0) {
             String id = tablaVendedor.getValueAt(fila, 0).toString();
             v = dao.listarVendedorId(id);
-            String dni = tablaVendedor.getValueAt(fila,1).toString();
+            String dni = tablaVendedor.getValueAt(fila, 1).toString();
             String nom = tablaVendedor.getValueAt(fila, 2).toString();
             String tel = tablaVendedor.getValueAt(fila, 3).toString();
             String estado = tablaVendedor.getValueAt(fila, 4).toString();
@@ -296,19 +308,18 @@ public class VendedorForm extends javax.swing.JInternalFrame {
         } else {
             int id = Integer.parseInt(modelo.getValueAt(fila, 0).toString());
             String dni = txtDni.getText();
-            String nom = txtNombres.getText();            
-            String tel=txtTelefono.getText();
-            String estado = comboEstado.getSelectedItem().toString();            
+            String nom = txtNombres.getText();
+            String tel = txtTelefono.getText();
+            String estado = comboEstado.getSelectedItem().toString();
             v.setDni(dni);
             v.setNom(nom);
             v.setTel(tel);
             v.setEstado(estado);
             v.setId(id);
-            r=dao.actualizar(v);
-            if(r==1){
+            r = dao.actualizar(v);
+            if (r == 1) {
                 JOptionPane.showMessageDialog(this, "Usuario Actualizado con Exito..!!");
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Error");
             }
             LimpiarTabla();

@@ -2,15 +2,19 @@ package vistas;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
-import modelo.ClienteDAO;
+import modeloDAO.ClienteDAO;
+
 
 public class ClienteForm extends javax.swing.JInternalFrame {
 
     ClienteDAO dao = new ClienteDAO();
     Cliente cl = new Cliente();
 
+    DefaultTableCellRenderer render=new DefaultTableCellRenderer();
     DefaultTableModel modelo = new DefaultTableModel();
     int id;
 
@@ -22,6 +26,13 @@ public class ClienteForm extends javax.swing.JInternalFrame {
     void listar() {
         List<Cliente> lista = dao.listar();
         modelo = (DefaultTableModel) tabla.getModel();
+        
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        tabla.getColumnModel().getColumn(0).setCellRenderer(render);
+        tabla.getColumnModel().getColumn(1).setCellRenderer(render);
+        tabla.getColumnModel().getColumn(4).setCellRenderer(render);
+       
+        
         Object[] ob = new Object[5];
         for (int i = 0; i < lista.size(); i++) {
             ob[0] = lista.get(i).getId();
@@ -163,7 +174,8 @@ public class ClienteForm extends javax.swing.JInternalFrame {
                 "ID", "DNI", "NOMBRES", "DIRECCION", "ESTADO"
             }
         ));
-        tabla.setRowHeight(30);
+        tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tabla.setRowHeight(25);
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaMouseClicked(evt);

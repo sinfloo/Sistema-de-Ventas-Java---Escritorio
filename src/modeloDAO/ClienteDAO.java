@@ -1,10 +1,13 @@
-package modelo;
+package modeloDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import modelo.CRUD;
+import modelo.Cliente;
+import config.Conexion;
 
 public class ClienteDAO implements CRUD {
 

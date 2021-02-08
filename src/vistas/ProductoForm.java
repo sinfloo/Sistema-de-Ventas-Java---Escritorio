@@ -2,9 +2,11 @@ package vistas;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Producto;
-import modelo.ProductoDAO;
+import modeloDAO.ProductoDAO;
 
 public class ProductoForm extends javax.swing.JInternalFrame {
 
@@ -21,6 +23,14 @@ public class ProductoForm extends javax.swing.JInternalFrame {
         modelo = (DefaultTableModel) tablaProducto.getModel();
         List<Producto> lista = dao.listarProducto();
         Object[] object = new Object[5];
+
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(SwingConstants.CENTER);
+        tablaProducto.getColumnModel().getColumn(0).setCellRenderer(render);
+        tablaProducto.getColumnModel().getColumn(2).setCellRenderer(render);
+        tablaProducto.getColumnModel().getColumn(3).setCellRenderer(render);
+        tablaProducto.getColumnModel().getColumn(4).setCellRenderer(render);
+
         for (int i = 0; i < lista.size(); i++) {
             object[0] = lista.get(i).getId();
             object[1] = lista.get(i).getNom();
@@ -68,6 +78,7 @@ public class ProductoForm extends javax.swing.JInternalFrame {
                 "ID", "NOMBRE", "PRECIO", "STOCK", "ESTADO"
             }
         ));
+        tablaProducto.setRowHeight(25);
         tablaProducto.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaProductoMouseClicked(evt);

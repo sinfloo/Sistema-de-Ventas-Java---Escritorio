@@ -1,11 +1,14 @@
 
-package modelo;
+package modeloDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import config.Conexion;
+import modelo.EntidadVendedor;
+import modelo.Vendedor;
 
 public class VendedorDAO {
     PreparedStatement ps;
@@ -16,7 +19,7 @@ public class VendedorDAO {
     
     public EntidadVendedor ValidarVendedor(String dni,String user){
         EntidadVendedor ev=new EntidadVendedor();
-        String sql="select * from vendedor where Dni=? and User=?";
+        String sql="select * from empleado where Dni=? and User=?";
         try {
            con=acceso.Conectar();
            ps=con.prepareStatement(sql);
@@ -37,7 +40,7 @@ public class VendedorDAO {
     }
      public Vendedor listarVendedorId(String dni) {
         Vendedor v=new Vendedor();
-        String sql = "select * from vendedor where Dni=" + dni;
+        String sql = "select * from empleado where Dni=" + dni;
         try {
             con = acceso.Conectar();
             ps = con.prepareStatement(sql);
@@ -57,7 +60,7 @@ public class VendedorDAO {
     //********CRUD - Principal**************
 
     public List listarVendedor() {
-        String sql = "select * from vendedor";
+        String sql = "select * from empleado";
         List<Vendedor> listaVendedor = new ArrayList<>();
         try {
             con = acceso.Conectar();
@@ -80,7 +83,7 @@ public class VendedorDAO {
 
     public int agregar(Vendedor v) {
         int r=0;
-        String sql = "insert into vendedor(Dni,Nombres,Telefono,Estado,User)values(?,?,?,?,?)";
+        String sql = "insert into empleado(Dni,Nombres,Telefono,Estado,User)values(?,?,?,?,?)";
         try {
             con = acceso.Conectar();
             ps = con.prepareStatement(sql);
@@ -97,7 +100,7 @@ public class VendedorDAO {
 
     public int actualizar(Vendedor v) {
         int r=0;
-        String sql = "update vendedor set Dni=?, Nombres=?,Telefono=?,Estado=? Where IdVendedor=?";
+        String sql = "update empleado set Dni=?, Nombres=?,Telefono=?,Estado=? Where IdEmpleado=?";
         try {
             con = acceso.Conectar();
             ps = con.prepareStatement(sql);
@@ -120,7 +123,7 @@ public class VendedorDAO {
 
     public int delete(int id) {
         int r=0;
-        String sql = "delete from vendedor where IdVendedor=?";
+        String sql = "delete from empleado where IdEmpleado=?";
         try {
             con = acceso.Conectar();
             ps = con.prepareStatement(sql);

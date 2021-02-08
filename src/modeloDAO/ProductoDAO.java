@@ -1,11 +1,13 @@
 
-package modelo;
+package modeloDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import config.Conexion;
+import modelo.Producto;
 
 public class ProductoDAO {
     int r;
