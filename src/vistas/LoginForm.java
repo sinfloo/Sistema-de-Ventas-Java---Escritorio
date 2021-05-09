@@ -1,5 +1,6 @@
 package vistas;
 
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import modelo.EntidadVendedor;
 import modeloDAO.VendedorDAO;
@@ -13,7 +14,7 @@ public class LoginForm extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         txtUser.setText("emp01");
-        txtPass.setText("12345678");
+        txtPass.setText("123");
     }
 
     @SuppressWarnings("unchecked")
@@ -109,28 +110,28 @@ public class LoginForm extends javax.swing.JFrame {
         validar();
     }//GEN-LAST:event_btnIngresarActionPerformed
     public void validar() {
-        String dni = txtPass.getText();
+        String dni="";
+        char[] token= txtPass.getPassword();
+        txtPass.getPassword();
         String user = txtUser.getText();
-        if (txtUser.getText().equals("") || txtPass.getText().equals("")) {
+        if (txtUser.getText().equals("") || Arrays.toString(txtPass.getPassword()).equals("")) {
             JOptionPane.showMessageDialog(this, "Debe Ingresar Datos En las cajas Texto");
             txtUser.requestFocus();
         } else {
+            for (char c : token) {
+                dni=dni.concat(""+c);
+            }
             ev = vdao.ValidarVendedor(dni, user);
             if (ev.getUser() != null && ev.getDni() != null) {
-                Principal p = new Principal();
+                Principal p = new Principal(ev);
                 p.setVisible(true);
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Debe ingresar usuarios validos");
                 txtUser.requestFocus();
-
             }
         }
     }
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

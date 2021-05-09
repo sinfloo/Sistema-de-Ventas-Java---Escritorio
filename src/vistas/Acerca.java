@@ -37,11 +37,11 @@ public class Acerca extends JInternalFrame {
 
         jLabel1.setText("@CopyRight :");
 
-        jLabel2.setText("Joel Hernandez Perez Choque");
+        jLabel2.setText("xxxxx xxxxxxxx xxxxx xxxxx");
 
-        jLabel3.setText("Email - joelpc@upeu.edu.pe ");
+        jLabel3.setText("Email - soporte@soporte.com");
 
-        jLabel4.setText("youtube.com/sinfloo");
+        jLabel4.setText("youtube.com/??????");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -66,7 +66,6 @@ public class Acerca extends JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
