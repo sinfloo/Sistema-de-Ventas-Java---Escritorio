@@ -4,8 +4,8 @@ import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
 public class Fecha {  
-    Calendar calendar = Calendar.getInstance();    
-    String fecha;
+    static Calendar calendar = Calendar.getInstance();    
+    static String fecha;
 
     public Fecha() {
     }
@@ -17,7 +17,7 @@ public class Fecha {
         return fecha;
     }
 
-    public String FechaBD() {
+    public static String FechaBD() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         fecha = sdf.format(calendar.getTime());
         return fecha;

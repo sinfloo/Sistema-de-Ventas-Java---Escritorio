@@ -2,22 +2,29 @@ package vistas;
 
 import config.Fecha;
 import config.GenerarSerie;
+import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 import modelo.Cliente;
 import modeloDAO.ClienteDAO;
 import modelo.DetalleVentas;
+import modelo.EntidadVendedor;
 import modelo.Producto;
 import modeloDAO.ProductoDAO;
 import modelo.Ventas;
 import modeloDAO.VentasDAO;
+import utils.Activate;
+import utils.CentrarTextoTabla;
+import utils.Utils;
 
-public class VentasForm extends javax.swing.JInternalFrame {
+public final class VentasForm extends javax.swing.JInternalFrame {
 
     VentasDAO vdao = new VentasDAO();
     ClienteDAO cdao = new ClienteDAO();
@@ -34,13 +41,14 @@ public class VentasForm extends javax.swing.JInternalFrame {
     int cant;
     double pre;
     double tpagar;
+    public static final SpinnerModel SPINNER = new SpinnerNumberModel(1, 1, 100, 1);
 
-    public VentasForm() {
+    public VentasForm(EntidadVendedor ev) {
         initComponents();
         generarSerie();
         fecha();
         txtCantidad.setValue(1);
-        txtVendedor.setText("Jose Antonio Villegas");
+        txtVendedor.setText(ev.getNom());
         File file = new File("C:\\SistemaVentasJavaEscritorio\\src\\Img\\logo2.png");
         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
         Icon icono = new ImageIcon(icon.getImage().getScaledInstance(75, 70, Image.SCALE_REPLICATE));
@@ -48,8 +56,10 @@ public class VentasForm extends javax.swing.JInternalFrame {
         File file1 = new File("C:\\SistemaVentasJavaEscritorio\\src\\Img\\logo1.png");
         ImageIcon icon1 = new ImageIcon(file1.getAbsolutePath());
         Icon icono1 = new ImageIcon(icon1.getImage().getScaledInstance(160, 101, Image.SCALE_REPLICATE));
-        lblImagen.setIcon(icono1);       
-
+        lblImagen.setIcon(icono1);
+        txtCantidad.setModel(SPINNER);
+        Activate.Of(new Component[]{btnBuscarProducto, btnAgregar, txtCodProd, txtPrecio});
+        txtCodCliente.requestFocus();
     }
 
     void fecha() {
@@ -63,7 +73,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
             txtSerie.setText("000000001");
         } else {
             int increment = Integer.parseInt(serie);
-            GenerarSerie gs=new GenerarSerie();
+            GenerarSerie gs = new GenerarSerie();
             serie = gs.NumeroSerie(increment);
             txtSerie.setText(serie);
         }
@@ -130,11 +140,28 @@ public class VentasForm extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "NRO", "COD", "PRODUCTO", "CANT", "PRE UNI", "TOTAL"
+                "#", "COD", "PRODUCTO", "CANT", "PRE UNI", "TOTAL"
             }
         ));
         TablaDetalle.setRowHeight(25);
         jScrollPane1.setViewportView(TablaDetalle);
+        if (TablaDetalle.getColumnModel().getColumnCount() > 0) {
+            TablaDetalle.getColumnModel().getColumn(0).setMinWidth(30);
+            TablaDetalle.getColumnModel().getColumn(0).setPreferredWidth(30);
+            TablaDetalle.getColumnModel().getColumn(0).setMaxWidth(30);
+            TablaDetalle.getColumnModel().getColumn(1).setMinWidth(80);
+            TablaDetalle.getColumnModel().getColumn(1).setPreferredWidth(80);
+            TablaDetalle.getColumnModel().getColumn(1).setMaxWidth(80);
+            TablaDetalle.getColumnModel().getColumn(3).setMinWidth(40);
+            TablaDetalle.getColumnModel().getColumn(3).setPreferredWidth(40);
+            TablaDetalle.getColumnModel().getColumn(3).setMaxWidth(40);
+            TablaDetalle.getColumnModel().getColumn(4).setMinWidth(60);
+            TablaDetalle.getColumnModel().getColumn(4).setPreferredWidth(60);
+            TablaDetalle.getColumnModel().getColumn(4).setMaxWidth(60);
+            TablaDetalle.getColumnModel().getColumn(5).setMinWidth(80);
+            TablaDetalle.getColumnModel().getColumn(5).setPreferredWidth(80);
+            TablaDetalle.getColumnModel().getColumn(5).setMaxWidth(80);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -158,6 +185,9 @@ public class VentasForm extends javax.swing.JInternalFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("COD: CLIENTE :");
 
+        txtCodCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtCodCliente.setForeground(new java.awt.Color(0, 0, 255));
+
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/buscar.png"))); // NOI18N
         btnBuscarCliente.setText("Buscar");
         btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -177,6 +207,9 @@ public class VentasForm extends javax.swing.JInternalFrame {
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel8.setText("COD. PRODU  :");
+
+        txtCodProd.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtCodProd.setForeground(new java.awt.Color(0, 0, 255));
 
         btnBuscarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/buscar.png"))); // NOI18N
         btnBuscarProducto.setText("Buscar");
@@ -198,6 +231,9 @@ public class VentasForm extends javax.swing.JInternalFrame {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel10.setText("PRECIO :");
 
+        txtPrecio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtPrecio.setForeground(new java.awt.Color(0, 0, 255));
+
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("STOCK :");
 
@@ -217,6 +253,9 @@ public class VentasForm extends javax.swing.JInternalFrame {
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("CANTIDAD :");
+
+        txtCantidad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtCantidad.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -381,6 +420,11 @@ public class VentasForm extends javax.swing.JInternalFrame {
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/cancelar.png"))); // NOI18N
         btnCancelar.setText("CANCELAR");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -463,11 +507,22 @@ public class VentasForm extends javax.swing.JInternalFrame {
             guardarVenta();
             guardarDetalle();
             actualizarStock();
-            JOptionPane.showMessageDialog(this, "La venta se Realizo con Exito...!!!");
+            imprimir();
             nuevo();
-            generarSerie();
+            generarSerie();            
+            
         }
     }//GEN-LAST:event_btnGenerarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        nuevo();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+    void imprimir() {
+        Imprimir imprimir = new Imprimir();
+        Principal.CentrarVentana(imprimir);
+        
+    }
+
     void nuevo() {
         limpiarTabla();
         txtCodCliente.setText("");
@@ -479,6 +534,9 @@ public class VentasForm extends javax.swing.JInternalFrame {
         txtStock.setText("");
         txtTotalPagar.setText("");
         txtCodCliente.requestFocus();
+        btnBuscarCliente.setEnabled(true);
+        txtCodCliente.setEnabled(true);
+        Activate.Of(new Component[]{btnBuscarProducto,txtCodProd});
     }
 
     void limpiarTabla() {
@@ -490,11 +548,9 @@ public class VentasForm extends javax.swing.JInternalFrame {
 
     void actualizarStock() {
         for (int i = 0; i < modelo.getRowCount(); i++) {
-            Producto pr = new Producto();
             idp = Integer.parseInt(TablaDetalle.getValueAt(i, 1).toString());
             cant = Integer.parseInt(TablaDetalle.getValueAt(i, 3).toString());
-            pr = pdao.listarID(idp);
-            int sa = pr.getStock() - cant;
+            int sa = ProductoDAO.listarID(idp).getStock() - cant;
             pdao.actualizarStock(sa, idp);
         }
     }
@@ -503,7 +559,7 @@ public class VentasForm extends javax.swing.JInternalFrame {
         int idv = 1;
         int idc = cliente.getId();
         String serie = txtSerie.getText();
-        String fecha = txtFecha.getText();
+        String fecha = Fecha.FechaBD();
         double monto = tpagar;
         String estado = "1";
         v.setIdCliente(idc);
@@ -520,48 +576,61 @@ public class VentasForm extends javax.swing.JInternalFrame {
         String idv = vdao.IdVentas();
         int idve = Integer.parseInt(idv);
         for (int i = 0; i < TablaDetalle.getRowCount(); i++) {
-            int idp = Integer.parseInt(TablaDetalle.getValueAt(i, 1).toString());
-            int cant = Integer.parseInt(TablaDetalle.getValueAt(i, 3).toString());
-            double pre = Double.parseDouble(TablaDetalle.getValueAt(i, 4).toString());
+            int idProdDet = Integer.parseInt(TablaDetalle.getValueAt(i, 1).toString());
+            int cantProdDet = Integer.parseInt(TablaDetalle.getValueAt(i, 3).toString());
+            double preProdDet = Double.parseDouble(TablaDetalle.getValueAt(i, 4).toString());
             dv.setIdVentas(idve);
-            dv.setIdProducto(idp);
-            dv.setCantidad(cant);
-            dv.setPreVenta(pre);
+            dv.setIdProducto(idProdDet);
+            dv.setCantidad(cantProdDet);
+            dv.setPreVenta(preProdDet);
             vdao.GuardarDetalleVentas(dv);
         }
     }
 
     void agregarProducto() {
         double total;
+        boolean isRegistry = false;
         modelo = (DefaultTableModel) TablaDetalle.getModel();
         item = item + 1;
-        idp = p.getId();
-        String nomp = txtProducto.getText();
-        pre = Double.parseDouble(txtPrecio.getText());
-        cant = Integer.parseInt(txtCantidad.getValue().toString());
+        int idProd = Integer.valueOf(txtCodProd.getText());
+        String nomProd = txtProducto.getText();
+        double preProd = Double.parseDouble(txtPrecio.getText());
+        int cantProd = Integer.parseInt(txtCantidad.getValue().toString());
         int stock = Integer.parseInt(txtStock.getText());
-        total = cant * pre;
-        ArrayList lista = new ArrayList();
-        if (stock > 0) {
-            lista.add(item);
-            lista.add(idp);
-            lista.add(nomp);
-            lista.add(cant);
-            lista.add(pre);
-            lista.add(total);
+        total = cantProd * preProd;
+        ArrayList<Object[]> detalle = new ArrayList();
+        for (int i = 0; i < TablaDetalle.getRowCount(); i++) {
+            if (TablaDetalle.getValueAt(i, 1).toString().equalsIgnoreCase(String.valueOf(idProd))) {
+                JOptionPane.showMessageDialog(null, "Producto ya esta registrado");
+                isRegistry = true;
+            }
+        }
+        if (stock > 0 && isRegistry == false) {
             Object[] ob = new Object[6];
-            ob[0] = lista.get(0);
-            ob[1] = lista.get(1);
-            ob[2] = lista.get(2);
-            ob[3] = lista.get(3);
-            ob[4] = lista.get(4);
-            ob[5] = lista.get(5);
-            modelo.addRow(ob);
+            ob[0] = item;
+            ob[1] = idProd;
+            ob[2] = nomProd;
+            ob[3] = cantProd;
+            ob[4] = preProd;
+            ob[5] = total;
+            detalle.add(ob);
+            detalle.forEach(objects -> {
+                modelo.addRow(objects);
+            });
+            CentrarTextoTabla.centrarText(TablaDetalle);
             TablaDetalle.setModel(modelo);
             calculatTotal();
         } else {
-            JOptionPane.showMessageDialog(this, "Stock PRoducto no Disponible");
+            if (stock == 0) {
+                JOptionPane.showMessageDialog(this, "Stock Producto no Disponible");
+            }
         }
+        Activate.On(new Component[]{txtCodProd, btnBuscarProducto});
+        txtCodProd.setText("");
+        txtPrecio.setText("");
+        txtCodProd.requestFocus();
+        Activate.Of(new Component[]{btnAgregar, txtPrecio});
+        txtCantidad.setValue(1);
     }
 
     void calculatTotal() {
@@ -575,18 +644,28 @@ public class VentasForm extends javax.swing.JInternalFrame {
     }
 
     void buscarProducto() {
-        int id = Integer.parseInt(txtCodProd.getText());
+        int id;
         if (txtCodProd.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar el codproducto");
+            JOptionPane.showMessageDialog(this, "Debe ingresar codigo de Producto");
+            txtCodProd.requestFocus();
         } else {
-            p = pdao.listarID(id);
+            id = Integer.parseInt(Utils.isNumeric(txtCodProd.getText())?txtCodProd.getText():"0");
+            p = ProductoDAO.listarID(id);
             if (p.getId() != 0) {
                 txtProducto.setText(p.getNom());
                 txtPrecio.setText("" + p.getPre());
                 txtStock.setText("" + p.getStock());
+                Activate.Of(new Component[]{btnBuscarProducto, txtCodProd});
+                Activate.On(new Component[]{btnAgregar, txtPrecio});
             } else {
-                JOptionPane.showMessageDialog(this, "Producto no registrado");
-                txtCodProd.requestFocus();
+                int r = JOptionPane.showConfirmDialog(this, "Producto No Existe, Desea Reagistrar?");
+                if (r == 0) {
+                    ProductoForm cf = new ProductoForm();
+                    Principal.VentanaPrincipal.add(cf);
+                    cf.setVisible(true);
+                } else {
+                    txtCodProd.requestFocus();
+                }
             }
         }
     }
@@ -595,21 +674,25 @@ public class VentasForm extends javax.swing.JInternalFrame {
         int r;
         String cod = txtCodCliente.getText();
         if (txtCodCliente.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Debe ingresar cod Cliente");
+            JOptionPane.showMessageDialog(this, "Debe ingresar documento del Cliente");
+            txtCodCliente.requestFocus();
         } else {
             cliente = cdao.listarID(cod);
             if (cliente.getDni() != null) {
                 txtCliente.setText(cliente.getNom());
+                Activate.Of(new Component[]{txtCodCliente, btnBuscarCliente});
+                Activate.On(new Component[]{btnBuscarProducto, txtCodProd});
                 txtCodProd.requestFocus();
             } else {
-                r = JOptionPane.showConfirmDialog(this, "Cleinte No Registrdo, Desea Reagistrar?");
+                r = JOptionPane.showConfirmDialog(this, "Cliente No Registrado, Desea Reagistrar?");
                 if (r == 0) {
                     ClienteForm cf = new ClienteForm();
                     Principal.VentanaPrincipal.add(cf);
                     cf.setVisible(true);
+                } else {
+                    txtCodCliente.requestFocus();
                 }
             }
-
         }
 
     }

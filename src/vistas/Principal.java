@@ -2,12 +2,16 @@ package vistas;
 
 import java.awt.Dimension;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import modelo.EntidadVendedor;
 
 public class Principal extends javax.swing.JFrame {
     
-    public Principal() {
+    EntidadVendedor ev=null;
+    public Principal(EntidadVendedor ev) {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+        this.ev=ev;
     }
 
     @SuppressWarnings("unchecked")
@@ -157,11 +161,15 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-
+        int r=JOptionPane.showConfirmDialog(null,"Esta seguro de Salir?");
+        if(r==0){
+           System.exit(0);
+        }
+        
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void menuGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuGenerarVentaActionPerformed
-        VentasForm vf = new VentasForm();
+        VentasForm vf = new VentasForm(this.ev);
         CentrarVentana(vf);
     }//GEN-LAST:event_menuGenerarVentaActionPerformed
 
@@ -181,7 +189,7 @@ public class Principal extends javax.swing.JFrame {
         CentrarVentana(v);
     }//GEN-LAST:event_MenuVendedorActionPerformed
     
-    void CentrarVentana(JInternalFrame frame) {
+    public static void CentrarVentana(JInternalFrame frame) {
         VentanaPrincipal.add(frame);
         Dimension dimension = VentanaPrincipal.getSize();
         Dimension Dframe = frame.getSize();
