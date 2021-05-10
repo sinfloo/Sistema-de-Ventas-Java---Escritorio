@@ -69,7 +69,7 @@ public class VentasDAO {
                 objectList.add(object);
             }
         } catch (SQLException e) {
-            System.out.println("Error:" + e);
+            System.out.println("Error al Obtener el detalle de venta :" + e);
         }
         return objectList;
     }
