@@ -101,7 +101,11 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
+<<<<<<< HEAD
             <Property name="text" type="java.lang.String" value="xxxxx xxxxxxxx xxxxx xxxxx"/>
+=======
+            <Property name="text" type="java.lang.String" value="Joel Hernandez Perez"/>
+>>>>>>> 5d46a000fc14de0d876d8319243b54b9806ff25c
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
