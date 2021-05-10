@@ -28,7 +28,7 @@ public class Imprimir extends javax.swing.JInternalFrame implements Printable {
     }
 
     final void imprimir() {
-        DecimalFormat dfoFormat = new DecimalFormat("0.00");
+        DecimalFormat dfoFormat = new DecimalFormat("#,###.00");
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
         DefaultTableModel model = (DefaultTableModel) jTableImprimir.getModel();
         io = VentasDAO.getDocumento(VentasDAO.IdVenta());
