@@ -27,7 +27,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         menuGenerarVenta = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        jmenuReportes = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         MenuCliente = new javax.swing.JMenuItem();
         MenuProducto = new javax.swing.JMenuItem();
@@ -52,12 +52,12 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/home.png"))); // NOI18N
         jMenu1.setText("Menu");
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/ayuda.png"))); // NOI18N
         jMenuItem1.setText("Ayuda");
         jMenu1.add(jMenuItem1);
 
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/cliente.png"))); // NOI18N
         jMenuItem7.setText("Acerca");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
@@ -67,7 +67,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem7);
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/enter.png"))); // NOI18N
         jMenuItem2.setText("Salir");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +82,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logoventas.png"))); // NOI18N
         jMenu2.setText("Ventas");
 
-        menuGenerarVenta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+        menuGenerarVenta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/ticket.png"))); // NOI18N
         menuGenerarVenta.setText("Generar Venta");
         menuGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -97,17 +97,22 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/reportes.png"))); // NOI18N
         jMenu4.setText("Reportes");
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/opcreport.png"))); // NOI18N
-        jMenuItem6.setText("Reporte de Ventas");
-        jMenu4.add(jMenuItem6);
+        jmenuReportes.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jmenuReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/opcreport.png"))); // NOI18N
+        jmenuReportes.setText("Reporte de Ventas");
+        jmenuReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmenuReportesActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jmenuReportes);
 
         jMenuBar1.add(jMenu4);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logomanten.png"))); // NOI18N
         jMenu3.setText("Mantenimiento");
 
-        MenuCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
+        MenuCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_DOWN_MASK));
         MenuCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/cliente.png"))); // NOI18N
         MenuCliente.setText("Cliente");
         MenuCliente.addActionListener(new java.awt.event.ActionListener() {
@@ -117,7 +122,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(MenuCliente);
 
-        MenuProducto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
+        MenuProducto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_DOWN_MASK));
         MenuProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/producto.png"))); // NOI18N
         MenuProducto.setText("Producto");
         MenuProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +132,7 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu3.add(MenuProducto);
 
-        MenuVendedor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_MASK));
+        MenuVendedor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.ALT_DOWN_MASK));
         MenuVendedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/vendedor.png"))); // NOI18N
         MenuVendedor.setText("Vendedor");
         MenuVendedor.addActionListener(new java.awt.event.ActionListener() {
@@ -188,6 +193,11 @@ public class Principal extends javax.swing.JFrame {
         VendedorForm v = new VendedorForm();
         CentrarVentana(v);
     }//GEN-LAST:event_MenuVendedorActionPerformed
+
+    private void jmenuReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmenuReportesActionPerformed
+       ReporteVentas rp=new ReporteVentas();
+        CentrarVentana(rp);
+    }//GEN-LAST:event_jmenuReportesActionPerformed
     
     public static void CentrarVentana(JInternalFrame frame) {
         VentanaPrincipal.add(frame);
@@ -211,8 +221,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jmenuReportes;
     private javax.swing.JMenuItem menuGenerarVenta;
     // End of variables declaration//GEN-END:variables
 }

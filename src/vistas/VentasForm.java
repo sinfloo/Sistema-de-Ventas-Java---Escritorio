@@ -3,6 +3,7 @@ package vistas;
 import config.Fecha;
 import config.GenerarSerie;
 import java.awt.Component;
+import java.awt.Event;
 import java.awt.Image;
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ public final class VentasForm extends javax.swing.JInternalFrame {
     DetalleVentas dv = new DetalleVentas();
 
     Cliente cliente = new Cliente();
-    int item;
     DefaultTableModel modelo = new DefaultTableModel();
     int idp;
     int cant;
@@ -187,6 +187,11 @@ public final class VentasForm extends javax.swing.JInternalFrame {
 
         txtCodCliente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtCodCliente.setForeground(new java.awt.Color(0, 0, 255));
+        txtCodCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodClienteKeyPressed(evt);
+            }
+        });
 
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/buscar.png"))); // NOI18N
         btnBuscarCliente.setText("Buscar");
@@ -210,6 +215,11 @@ public final class VentasForm extends javax.swing.JInternalFrame {
 
         txtCodProd.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtCodProd.setForeground(new java.awt.Color(0, 0, 255));
+        txtCodProd.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodProdKeyPressed(evt);
+            }
+        });
 
         btnBuscarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/buscar.png"))); // NOI18N
         btnBuscarProducto.setText("Buscar");
@@ -233,6 +243,11 @@ public final class VentasForm extends javax.swing.JInternalFrame {
 
         txtPrecio.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtPrecio.setForeground(new java.awt.Color(0, 0, 255));
+        txtPrecio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPrecioKeyPressed(evt);
+            }
+        });
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel11.setText("STOCK :");
@@ -250,12 +265,22 @@ public final class VentasForm extends javax.swing.JInternalFrame {
                 btnAgregarActionPerformed(evt);
             }
         });
+        btnAgregar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAgregarKeyPressed(evt);
+            }
+        });
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel12.setText("CANTIDAD :");
 
         txtCantidad.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         txtCantidad.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyPressed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -509,18 +534,48 @@ public final class VentasForm extends javax.swing.JInternalFrame {
             actualizarStock();
             imprimir();
             nuevo();
-            generarSerie();            
-            
+            generarSerie();
         }
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         nuevo();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtCodClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodClienteKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            buscarCliente();
+        }
+    }//GEN-LAST:event_txtCodClienteKeyPressed
+
+    private void txtCodProdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodProdKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            buscarProducto();
+            txtPrecio.requestFocus();
+        }
+    }//GEN-LAST:event_txtCodProdKeyPressed
+
+    private void txtPrecioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            btnAgregar.requestFocus();
+        }
+    }//GEN-LAST:event_txtPrecioKeyPressed
+
+    private void txtCantidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            agregarProducto();
+        }
+    }//GEN-LAST:event_txtCantidadKeyPressed
+
+    private void btnAgregarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAgregarKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            agregarProducto();
+        }
+    }//GEN-LAST:event_btnAgregarKeyPressed
     void imprimir() {
         Imprimir imprimir = new Imprimir();
         Principal.CentrarVentana(imprimir);
-        
+
     }
 
     void nuevo() {
@@ -536,7 +591,7 @@ public final class VentasForm extends javax.swing.JInternalFrame {
         txtCodCliente.requestFocus();
         btnBuscarCliente.setEnabled(true);
         txtCodCliente.setEnabled(true);
-        Activate.Of(new Component[]{btnBuscarProducto,txtCodProd});
+        Activate.Of(new Component[]{btnBuscarProducto, txtCodProd});
     }
 
     void limpiarTabla() {
@@ -591,7 +646,6 @@ public final class VentasForm extends javax.swing.JInternalFrame {
         double total;
         boolean isRegistry = false;
         modelo = (DefaultTableModel) TablaDetalle.getModel();
-        item = item + 1;
         int idProd = Integer.valueOf(txtCodProd.getText());
         String nomProd = txtProducto.getText();
         double preProd = Double.parseDouble(txtPrecio.getText());
@@ -607,7 +661,7 @@ public final class VentasForm extends javax.swing.JInternalFrame {
         }
         if (stock > 0 && isRegistry == false) {
             Object[] ob = new Object[6];
-            ob[0] = item;
+            ob[0] = TablaDetalle.getRowCount()+1;
             ob[1] = idProd;
             ob[2] = nomProd;
             ob[3] = cantProd;
@@ -649,7 +703,7 @@ public final class VentasForm extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Debe ingresar codigo de Producto");
             txtCodProd.requestFocus();
         } else {
-            id = Integer.parseInt(Utils.isNumeric(txtCodProd.getText())?txtCodProd.getText():"0");
+            id = Integer.parseInt(Utils.isNumeric(txtCodProd.getText()) ? txtCodProd.getText() : "0");
             p = ProductoDAO.listarID(id);
             if (p.getId() != 0) {
                 txtProducto.setText(p.getNom());

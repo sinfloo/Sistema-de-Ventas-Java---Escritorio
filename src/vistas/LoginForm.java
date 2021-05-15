@@ -110,8 +110,8 @@ public class LoginForm extends javax.swing.JFrame {
         validar();
     }//GEN-LAST:event_btnIngresarActionPerformed
     public void validar() {
-        String dni="";
-        char[] token= txtPass.getPassword();
+        String dni = "";
+        char[] token = txtPass.getPassword();
         txtPass.getPassword();
         String user = txtUser.getText();
         if (txtUser.getText().equals("") || Arrays.toString(txtPass.getPassword()).equals("")) {
@@ -119,21 +119,28 @@ public class LoginForm extends javax.swing.JFrame {
             txtUser.requestFocus();
         } else {
             for (char c : token) {
-                dni=dni.concat(""+c);
+                dni = dni.concat("" + c);
             }
             ev = vdao.ValidarVendedor(dni, user);
-            if (ev.getUser() != null && ev.getDni() != null) {
-                Principal p = new Principal(ev);
-                p.setVisible(true);
-                dispose();
+            if (ev != null) {
+                if (ev.getUser() != null && ev.getDni() != null) {
+                    Principal p = new Principal(ev);
+                    p.setVisible(true);
+                    dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Debe ingresar usuarios validos");
+                    txtUser.requestFocus();
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Debe ingresar usuarios validos");
+                JOptionPane.showMessageDialog(this, "No se pudo conectar a la base de datos");
                 txtUser.requestFocus();
             }
+
         }
     }
+
     public static void main(String args[]) {
-         java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new LoginForm().setVisible(true);
             }

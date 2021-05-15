@@ -32,6 +32,19 @@ public class CentrarTextoTabla {
         }
 
     }
+    public static void centrarText3(JTable jTable) {
+        DefaultTableCellRenderer modelocentrar = new DefaultTableCellRenderer();
+        DefaultTableCellRenderer modeloleft = new DefaultTableCellRenderer();
+        modelocentrar.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < jTable.getColumnCount(); i++) {
+            jTable.getColumnModel().getColumn(i).setCellRenderer(modelocentrar);
+            if (i == 4 || i == 5) {
+                modeloleft.setHorizontalAlignment(SwingConstants.LEFT);
+                jTable.getColumnModel().getColumn(i).setCellRenderer(modeloleft);
+            }
+        }
+
+    }
 
     public void izq_datos(JTable jTable) {
         DefaultTableCellRenderer modelocentrar = new DefaultTableCellRenderer();

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import config.Conexion;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.DetalleVentas;
@@ -12,13 +13,7 @@ import modelo.Ventas;
 import utils.ImprimirObject;
 
 public class VentasDAO {
-
-    Conexion cn = new Conexion();
-    Connection con;
-    PreparedStatement ps;
-    ResultSet rs;
-    int r = 0;
-
+    static final DecimalFormat DFORMAT=new DecimalFormat("0.00");
     public static ImprimirObject getDocumento(int idVenta) {
         ImprimirObject object = new ImprimirObject();
         String sql = "SELECT v.NumeroSerie,v.FechaVentas,v.Monto,c.Nombres,c.Dni,c.Direccion,"
@@ -57,15 +52,47 @@ public class VentasDAO {
             Connection con = Conexion.ConectarDB();
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            int contador=0;
+            int contador = 0;
             while (rs.next()) {
-                contador=contador+1;
+                contador = contador + 1;
                 Object object[] = new Object[5];
-                object[0]=contador;
-                object[1]=rs.getString("p.Nombres");
-                object[2]=rs.getDouble("dv.PrecioVenta");
-                object[3]=rs.getInt("dv.Cantidad");
-                object[4]=Double.valueOf(object[2].toString())*Integer.valueOf(object[3].toString());
+                object[0] = contador;
+                object[1] = rs.getString("p.Nombres");
+                object[2] = rs.getDouble("dv.PrecioVenta");
+                object[3] = rs.getInt("dv.Cantidad");
+                object[4] = Double.valueOf(object[2].toString()) * Integer.valueOf(object[3].toString());
+                objectList.add(object);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error:" + e);
+        }
+        return objectList;
+    }
+
+    public static List<Object[]> getVentas(String fecInicio, String fecFinal) {
+        List<Object[]> objectList = new ArrayList<>();
+        String sql = "SELECT v.IdVentas,v.FechaVentas,v.NumeroSerie,v.Monto,e.Nombres,c.Nombres\n"
+                + "FROM ventas v INNER JOIN empleado e\n"
+                + "ON V.IdEmpleado=E.IdEmpleado INNER JOIN cliente c \n"
+                + "ON V.IdCliente=c.IdCliente\n"
+                + "WHERE v.FechaVentas BETWEEN ? AND ?";
+        try {
+            Connection con = Conexion.ConectarDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, fecInicio);
+            ps.setString(2, fecFinal);
+            ResultSet rs = ps.executeQuery();
+            int contador = 0;
+            while (rs.next()) {
+                contador = contador + 1;
+                Object object[] = new Object[7];
+                object[0] = contador;
+                object[1] = rs.getString("v.FechaVentas");
+                object[2] = rs.getString("v.NumeroSerie");
+                object[3] = DFORMAT.format(rs.getDouble("v.Monto"));
+                object[4] = rs.getString("e.Nombres");
+                object[5] = rs.getString("c.Nombres");
+                object[6] = rs.getInt("v.IdVentas");
                 objectList.add(object);
             }
         } catch (SQLException e) {
@@ -78,13 +105,14 @@ public class VentasDAO {
         String serie = "";
         String sql = "select max(NumeroSerie) from ventas";
         try {
-            con = cn.Conectar();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+            Connection con = Conexion.ConectarDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 serie = rs.getString(1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            System.out.println("Error:" + e);
         }
         return serie;
     }
@@ -93,9 +121,9 @@ public class VentasDAO {
         String idv = "";
         String sql = "select max(IdVentas) from ventas";
         try {
-            con = cn.Conectar();
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+            Connection con = Conexion.ConectarDB();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 idv = rs.getString(1);
             }
@@ -122,10 +150,11 @@ public class VentasDAO {
     }
 
     public int GuardarVentas(Ventas v) {
+        int r = 0;
         String sql = "insert into Ventas(IdCliente, IdEmpleado,NumeroSerie,FechaVentas,Monto,Estado)values(?,?,?,?,?,?)";
         try {
-            con = cn.Conectar();
-            ps = con.prepareStatement(sql);
+            Connection con = Conexion.ConectarDB();
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, v.getIdCliente());
             ps.setInt(2, v.getIdVendedor());
             ps.setString(3, v.getSerie());
@@ -134,24 +163,25 @@ public class VentasDAO {
             ps.setString(6, v.getEstado());
             r = ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error:"+e);
+            System.out.println("Error:" + e);
         }
 
         return r;
     }
 
     public int GuardarDetalleVentas(DetalleVentas dv) {
+        int r = 0;
         String sql = "insert into detalle_ventas(IdVentas,IdProducto,Cantidad,PrecioVenta)values(?,?,?,?)";
         try {
-            con = cn.Conectar();
-            ps = con.prepareStatement(sql);
+            Connection con = Conexion.ConectarDB();
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, dv.getIdVentas());
             ps.setInt(2, dv.getIdProducto());
             ps.setInt(3, dv.getCantidad());
             ps.setDouble(4, dv.getPreVenta());
-            ps.executeUpdate();
+            r = ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error:"+e);
+            System.out.println("Error:" + e);
         }
         return r;
     }

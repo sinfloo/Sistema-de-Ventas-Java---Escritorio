@@ -23,7 +23,7 @@ public class ClienteForm extends javax.swing.JInternalFrame {
         listar();
     }
 
-    void listar() {
+    final void listar() {
         List<Cliente> lista = dao.listar();
         modelo = (DefaultTableModel) tabla.getModel();
         
@@ -81,7 +81,7 @@ public class ClienteForm extends javax.swing.JInternalFrame {
 
         jLabel4.setText("ESTADO :");
 
-        cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR", "1", "0" }));
+        cboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR", "ACTIVO", "INACTIVO" }));
 
         btnAgregar.setText("AGREGAR");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -181,11 +181,6 @@ public class ClienteForm extends javax.swing.JInternalFrame {
                 tablaMouseClicked(evt);
             }
         });
-        tabla.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tablaKeyPressed(evt);
-            }
-        });
         jScrollPane1.setViewportView(tabla);
         if (tabla.getColumnModel().getColumnCount() > 0) {
             tabla.getColumnModel().getColumn(0).setMinWidth(35);
@@ -194,9 +189,9 @@ public class ClienteForm extends javax.swing.JInternalFrame {
             tabla.getColumnModel().getColumn(1).setMinWidth(70);
             tabla.getColumnModel().getColumn(1).setPreferredWidth(70);
             tabla.getColumnModel().getColumn(1).setMaxWidth(70);
-            tabla.getColumnModel().getColumn(4).setMinWidth(50);
-            tabla.getColumnModel().getColumn(4).setPreferredWidth(50);
-            tabla.getColumnModel().getColumn(4).setMaxWidth(50);
+            tabla.getColumnModel().getColumn(4).setMinWidth(80);
+            tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tabla.getColumnModel().getColumn(4).setMaxWidth(80);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -205,14 +200,14 @@ public class ClienteForm extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -266,10 +261,6 @@ public class ClienteForm extends javax.swing.JInternalFrame {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         nuevo();
     }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void tablaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tablaKeyPressed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
         int fila = tabla.getSelectedRow();

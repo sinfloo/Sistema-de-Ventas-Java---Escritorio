@@ -7,8 +7,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import modelo.Producto;
 import modeloDAO.ProductoDAO;
+import utils.Utils;
 
-public class ProductoForm extends javax.swing.JInternalFrame {
+public final class ProductoForm extends javax.swing.JInternalFrame {
 
     ProductoDAO dao = new ProductoDAO();
     Producto p = new Producto();
@@ -26,15 +27,14 @@ public class ProductoForm extends javax.swing.JInternalFrame {
 
         DefaultTableCellRenderer render = new DefaultTableCellRenderer();
         render.setHorizontalAlignment(SwingConstants.CENTER);
-        tablaProducto.getColumnModel().getColumn(0).setCellRenderer(render);
-        tablaProducto.getColumnModel().getColumn(2).setCellRenderer(render);
+        tablaProducto.getColumnModel().getColumn(0).setCellRenderer(render);        
         tablaProducto.getColumnModel().getColumn(3).setCellRenderer(render);
         tablaProducto.getColumnModel().getColumn(4).setCellRenderer(render);
 
         for (int i = 0; i < lista.size(); i++) {
             object[0] = lista.get(i).getId();
             object[1] = lista.get(i).getNom();
-            object[2] = lista.get(i).getPre();
+            object[2] = Utils.formatMoney(lista.get(i).getPre());
             object[3] = lista.get(i).getStock();
             object[4] = lista.get(i).getEstado();
             modelo.addRow(object);
@@ -89,15 +89,15 @@ public class ProductoForm extends javax.swing.JInternalFrame {
             tablaProducto.getColumnModel().getColumn(0).setMinWidth(30);
             tablaProducto.getColumnModel().getColumn(0).setPreferredWidth(30);
             tablaProducto.getColumnModel().getColumn(0).setMaxWidth(30);
-            tablaProducto.getColumnModel().getColumn(2).setMinWidth(50);
-            tablaProducto.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tablaProducto.getColumnModel().getColumn(2).setMaxWidth(50);
+            tablaProducto.getColumnModel().getColumn(2).setMinWidth(80);
+            tablaProducto.getColumnModel().getColumn(2).setPreferredWidth(80);
+            tablaProducto.getColumnModel().getColumn(2).setMaxWidth(80);
             tablaProducto.getColumnModel().getColumn(3).setMinWidth(50);
             tablaProducto.getColumnModel().getColumn(3).setPreferredWidth(50);
             tablaProducto.getColumnModel().getColumn(3).setMaxWidth(50);
-            tablaProducto.getColumnModel().getColumn(4).setMinWidth(50);
-            tablaProducto.getColumnModel().getColumn(4).setPreferredWidth(50);
-            tablaProducto.getColumnModel().getColumn(4).setMaxWidth(50);
+            tablaProducto.getColumnModel().getColumn(4).setMinWidth(90);
+            tablaProducto.getColumnModel().getColumn(4).setPreferredWidth(90);
+            tablaProducto.getColumnModel().getColumn(4).setMaxWidth(90);
         }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -106,14 +106,14 @@ public class ProductoForm extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -126,7 +126,7 @@ public class ProductoForm extends javax.swing.JInternalFrame {
             }
         });
 
-        comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "1", "0" }));
+        comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccionar", "ACTIVO", "INACTIVO" }));
 
         jLabel1.setText("NOMBRES");
 

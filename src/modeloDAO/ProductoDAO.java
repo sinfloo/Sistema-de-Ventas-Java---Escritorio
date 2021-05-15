@@ -73,7 +73,7 @@ public class ProductoDAO {
                     p.setNom(rs.getString(2));
                     p.setPre(rs.getDouble(3));
                     p.setStock(rs.getInt(4));
-                    p.setEstado(rs.getString(5));
+                    p.setEstado(rs.getString(5).equals("1")?"ACTIVO":"INACTIVO");
                     listaprod.add(p);
                 }   
             }
@@ -94,7 +94,7 @@ public class ProductoDAO {
                 ps.setString(1, p.getNom());
                 ps.setDouble(2, p.getPre());
                 ps.setInt(3, p.getStock());
-                ps.setString(4, p.getEstado());
+                ps.setString(4, p.getEstado().equals("ACTIVO")?"1":"0");
                 ps.executeUpdate();
             }
             ps.close();
@@ -104,18 +104,6 @@ public class ProductoDAO {
         return r;
     }
 
-//    public int actualizarStock(int cant, int id) {
-//        String sql = "update producto set Stock=? where IdProducto=?";
-//        try {
-//            con = acceso.Conectar();
-//            ps = con.prepareStatement(sql);          
-//            ps.setInt(1, cant);           
-//            ps.setInt(2, id);
-//            ps.executeUpdate();
-//        } catch (Exception e) {
-//        }
-//        return r;
-//    }
     public int actualizar(Producto p) {
         String sql = "update producto set Nombres=?,Precio=?,Stock=?,Estado=? where IdProducto=?";
         try {
@@ -125,7 +113,7 @@ public class ProductoDAO {
                 ps.setString(1, p.getNom());
                 ps.setDouble(2, p.getPre());
                 ps.setInt(3, p.getStock());
-                ps.setString(4, p.getEstado());
+                ps.setString(4, p.getEstado().equals("ACTIVO")?"1":"0");
                 ps.setInt(5, p.getId());
                 ps.executeUpdate();
             }

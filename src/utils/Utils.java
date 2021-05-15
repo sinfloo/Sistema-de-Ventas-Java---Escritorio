@@ -1,5 +1,7 @@
 package utils;
 
+import java.text.DecimalFormat;
+
 public class Utils {
 
     public static boolean isNumeric(String texto) {
@@ -12,5 +14,9 @@ public class Utils {
             r=false;
         }
         return r;
+    }
+    public static String formatMoney(Double monto){
+        DecimalFormat decimalFormat=new DecimalFormat("0.00");
+        return decimalFormat.format(monto);
     }
 }

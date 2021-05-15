@@ -279,6 +279,7 @@ public class Imprimir extends javax.swing.JInternalFrame implements Printable {
             if (r) {
                 pjob.print();
             }
+            pjob.cancel();
         } catch (HeadlessException | PrinterException e) {
             System.out.println("Error:" + e);
         }
