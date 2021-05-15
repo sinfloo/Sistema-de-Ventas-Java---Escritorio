@@ -253,7 +253,7 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
             }
         
         } catch (DocumentException e) {
-            System.out.println("Error:" + e);
+            System.out.println("Error al Generar PDF:" + e);
         }
     }
 
