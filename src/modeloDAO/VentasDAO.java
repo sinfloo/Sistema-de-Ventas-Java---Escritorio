@@ -92,7 +92,7 @@ public class VentasDAO {
                 object[3] = DFORMAT.format(rs.getDouble("v.Monto"));
                 object[4] = rs.getString("e.Nombres");
                 object[5] = rs.getString("c.Nombres");
-                object[6] = rs.getInt("v.IdVentas");
+                //object[6] = rs.getInt("v.IdVentas");
                 objectList.add(object);
             }
         } catch (SQLException e) {

@@ -17,6 +17,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import config.Fecha;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,10 +29,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import modeloDAO.VentasDAO;
 import utils.CentrarTextoTabla;
 import utils.LimpiarJTable;
+import utils.MyEditor;
+import utils.MyRender;
 
 public class ReporteVentas extends javax.swing.JInternalFrame {
 
@@ -123,7 +129,7 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "#", "FECHA", "SERIE", "MONTO", "CLIENTE", "VENDEDOR", "ACCION"
+                "#", "FECHA", "SERIE", "MONTO", "CLIENTE", "VENDEDOR"
             }
         ));
         jScrollPane1.setViewportView(tableVentaReport);
@@ -140,9 +146,6 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
             tableVentaReport.getColumnModel().getColumn(3).setMinWidth(80);
             tableVentaReport.getColumnModel().getColumn(3).setPreferredWidth(80);
             tableVentaReport.getColumnModel().getColumn(3).setMaxWidth(80);
-            tableVentaReport.getColumnModel().getColumn(6).setMinWidth(80);
-            tableVentaReport.getColumnModel().getColumn(6).setPreferredWidth(80);
-            tableVentaReport.getColumnModel().getColumn(6).setMaxWidth(80);
         }
 
         btnExportatPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/pdf16.png"))); // NOI18N
@@ -179,10 +182,11 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(lblTotalMonto)
-                    .addComponent(btnExportatPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnExportatPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(lblTotalMonto)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                 .addContainerGap())
@@ -225,7 +229,7 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExportatPDFActionPerformed
     void exportarPDF() throws IOException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
-        String file = "Ventas del " + Fecha.FechaBD(dateIni.getDate()) + " Al " + Fecha.FechaBD(dateFin.getDate()) + "_" + dateFormat.format(new Date())+".pdf";
+        String file = "Ventas del " + Fecha.FechaBD(dateIni.getDate()) + " Al " + Fecha.FechaBD(dateFin.getDate()) + "_" + dateFormat.format(new Date()) + ".pdf";
 
         try {
             try ( Document document = new Document(PageSize.A4)) {
@@ -249,9 +253,9 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
 
                 document.add(pdfPTable);
                 Desktop.getDesktop().open(new File(file));
-                
+
             }
-        
+
         } catch (DocumentException e) {
             System.out.println("Error al Generar PDF:" + e);
         }
@@ -313,10 +317,12 @@ public class ReporteVentas extends javax.swing.JInternalFrame {
         for (Object[] v : ventas) {
             montoVenta = montoVenta + (Double.parseDouble(v[3].toString()));
         }
+
         tableVentaReport.setModel(modelo);
         lblTotalMonto.setText("S/." + DFORMAT.format(montoVenta));
         CentrarTextoTabla.centrarText3(tableVentaReport);
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarVenta;
