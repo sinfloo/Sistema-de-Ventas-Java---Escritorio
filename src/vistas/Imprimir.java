@@ -1,5 +1,8 @@
 package vistas;
 
+import br.com.adilson.util.Extenso;
+import br.com.adilson.util.PrinterMatrix;
+import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.HeadlessException;
@@ -7,10 +10,24 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.print.Doc;
+import javax.print.DocFlavor;
+import javax.print.DocPrintJob;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
+import javax.print.SimpleDoc;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -41,8 +58,11 @@ public class Imprimir extends javax.swing.JInternalFrame implements Printable {
             model.addRow(object);
         });
         jTableImprimir.setModel(model);
-        txtSubTotal.setText(dfoFormat.format(io.getTotalPagar() / (1.18)));
-        txtIgv.setText(dfoFormat.format(io.getTotalPagar() - (io.getTotalPagar() / 1.18)));
+        io.setSubTotal(io.getTotalPagar() / (1.18));
+        io.setIgv(io.getTotalPagar() - (io.getTotalPagar() / 1.18));
+
+        txtSubTotal.setText(dfoFormat.format(io.getSubTotal()));
+        txtIgv.setText(dfoFormat.format(io.getIgv()));
         txtTotalPagar.setText(dfoFormat.format(io.getTotalPagar()));
         CentrarTextoTabla.centrarText2(jTableImprimir);
     }
@@ -218,7 +238,7 @@ public class Imprimir extends javax.swing.JInternalFrame implements Printable {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -284,9 +304,92 @@ public class Imprimir extends javax.swing.JInternalFrame implements Printable {
         } catch (HeadlessException | PrinterException e) {
             System.out.println("Error:" + e);
         }*/
-        Utils.imprimir(jTableImprimir, "12345678");
+        imprimirDocumento(jTableImprimir, io.getNroSerie());
+        try {
+            Desktop.getDesktop().open(new File(io.getNroSerie()+".txt"));
+        } catch (IOException ex) {
+            Logger.getLogger(Imprimir.class.getName()).log(Level.SEVERE, null, ex);
+        }
         dispose();
     }//GEN-LAST:event_btnImprimirActionPerformed
+    void imprimirDocumento(JTable table,String serie) {
+         PrinterMatrix printer = new PrinterMatrix();
+
+         Extenso e = new Extenso();
+
+        e.setNumber(50);
+
+        //Definir el tamanho del papel para la impresion  aca 25 lineas y 80 columnas
+        printer.setOutSize(100, 31);
+        //Imprimir * de la 2da linea a 25 en la columna 1;
+        // printer.printCharAtLin(2, 25, 1, "*");
+        //Imprimir * 1ra linea de la columa de 1 a 80
+        printer.printCharAtCol(1, 1, 31, "-");
+     
+        //Imprimir Encabezado nombre del La EMpresa
+        printer.printTextWrap(1, 1, 6, 31, "COMPROBANTE DE PAGO");
+        //printer.printTextWrap(linI, linE, colI, colE, null);
+        printer.printTextWrap(2, 2, 0, 31, "DIRECCION:Km29 Panamericana sur");
+        int longitudName=io.getNomCliente().length();
+        String texto="CLI:"+(longitudName>14?io.getNomCliente().substring(0,14):io.getNomCliente())+" Dni:"+(io.getDocClient().length()>8?io.getDocClient().substring(0,8):io.getDocClient());
+        printer.printTextWrap(3, 3, 0, 31, texto);
+        printer.printTextWrap(4, 4, 0,31, "NRO:"+io.getNroSerie()+" Fecha: " +io.getFecha());
+        printer.printCharAtCol(6, 1, 31, "-");        
+        printer.printTextWrap(6, 7, 1, 4, "ID");
+        printer.printTextWrap(6, 7, 4, 15, "PRODUCTO");
+        printer.printTextWrap(6, 7, 16, 20, "PRE");
+        printer.printTextWrap(6, 7, 20,26 , "CANT");
+        printer.printTextWrap(6, 7, 26,31, "TOTAL");
+        printer.printCharAtCol(8, 1, 31, "-");
+        int filas = table.getRowCount();
+
+        for (int i = 0; i < filas; i++) {
+            printer.printTextWrap(8 + i, 8+i, 1, 4, table.getValueAt(i, 0).toString());
+            printer.printTextWrap(8 + i, 9+i, 4, 15, table.getValueAt(i, 1).toString());
+            printer.printTextWrap(8 + i, 8+i, 16, 21, table.getValueAt(i, 2).toString());
+            printer.printTextWrap(8 + i, 8+i, 22, 24, table.getValueAt(i, 3).toString());
+            printer.printTextWrap(8 + i, 8+i, 25, 31, table.getValueAt(i, 4).toString());
+        }
+        DecimalFormat dfoFormat = new DecimalFormat("0.00");
+        printer.printCharAtCol(filas+12, 1, 31, "-");
+        printer.printTextWrap(filas+13, filas+13, 1, 31, "SubTotal  :S/." + dfoFormat.format(io.getSubTotal()));
+        printer.printTextWrap(filas+14, filas+14, 1, 31, "IGV       :S/." + dfoFormat.format(io.getIgv()));
+        printer.printTextWrap(filas+15, filas+16, 1, 31, "Total     :S/." + io.getTotalPagar());
+        printer.printCharAtCol(filas+17, 1, 31, "-");
+        printer.printTextWrap(filas+17, filas+17, 1, 31, "Vendededor:"+io.getUserName());
+        printer.printTextWrap(filas+18, filas+18, 0, 31, "Esta ticket no tiene valor fiscal solo uso interno");
+
+        printer.toFile(serie + ".txt");
+
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(serie + ".txt");
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        if (inputStream == null) {
+            return;
+        }
+
+        DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        Doc document = new SimpleDoc(inputStream, docFormat, null);
+
+        PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
+
+        PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
+
+        if (defaultPrintService != null) {
+            DocPrintJob printJob = defaultPrintService.createPrintJob();
+            try {
+                printJob.print(document, attributeSet);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            System.err.println("No existen impresoras instaladas");
+        }
+    }
     void procesar(JTable jTable, String header, String footer, boolean showPrintDialog) {
         boolean fitWidth = true;
         boolean interactive = true;
