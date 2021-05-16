@@ -1,0 +1,25 @@
+       Minimarket "Pepito"
+  Direcion:Los Alamos - Juliaca
+Clie:Cliente Tienda Dni:12345678
+ BOL:0000001 Fecha : 2021-05-01
+-------------------------------
+ID Producto  Cant Precio  Total
+-------------------------------
+01 USB Kinston	1 20.00	 20.00
+02 Table ultimo 2 200.00 400.00
+01 USB Kinston	1 20.00	 20.00
+02 Table ultimo 2 200.00 400.00
+01 USB Kinston	1 20.00	 20.00
+02 Table ultimo 2 200.00 400.00
+01 USB Kinston	1 20.00	 20.00
+02 Table ultimo 2 200.00 400.00
+01 USB Kinston	1 20.00	 20.00
+02 Table ultimo 2 200.00 400.00
+-------------------------------
+	    Subtotal: S/.400.00
+            IGV	    : S/. 20.00
+            Total   : S/.420.00
+-------------------------------
+  soporte@soporteventas.com
+      Cel.9292992929
+-------------------------------

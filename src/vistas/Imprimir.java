@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import modeloDAO.VentasDAO;
 import utils.CentrarTextoTabla;
 import utils.ImprimirObject;
+import utils.Utils;
 
 public class Imprimir extends javax.swing.JInternalFrame implements Printable {
 
@@ -272,7 +273,7 @@ public class Imprimir extends javax.swing.JInternalFrame implements Printable {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        try {
+       /* try {
             PrinterJob pjob = PrinterJob.getPrinterJob();
             pjob.setPrintable(this);
             boolean r = pjob.printDialog();
@@ -282,8 +283,8 @@ public class Imprimir extends javax.swing.JInternalFrame implements Printable {
             pjob.cancel();
         } catch (HeadlessException | PrinterException e) {
             System.out.println("Error:" + e);
-        }
-        //procesar(jTableImprimir, "CLIENTE:"+io.getNomCliente()+" FECHA:"+io.getFecha(), "Vendedor:"+io.getUserName()+" Correo:soporteventas@soporte.com", true);
+        }*/
+        Utils.imprimir(jTableImprimir, "12345678");
         dispose();
     }//GEN-LAST:event_btnImprimirActionPerformed
     void procesar(JTable jTable, String header, String footer, boolean showPrintDialog) {
