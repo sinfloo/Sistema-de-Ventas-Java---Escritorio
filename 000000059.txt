@@ -1,0 +1,100 @@
+-------------------------------
+      COMPROBANTE DE PAGO      
+DIRECCION:Km29 Panamericana sur
+CLI:Cliente Frecue Dni:123     
+NRO:000000059 Fecha: 2021-05-16
+-------------------------------
+ ID PRODUCTO    PRE CANT  TOTAL
+-------------------------------
+ 1  Laptop Leno 1200. 1  1200.0
+ 2  Laptop Leno 1000. 1  1000.0
+    vo 330 IdeA 0              
+    pad                        
+                               
+-------------------------------
+                               
+ SubTotal  :S/.1864.41         
+ IGV       :S/.335.59          
+ Total     :S/.2200.0          
+-------------------------------
+ Vendededor:Empleado 0001      
+Esta ticket no tiene valor fisc
+al solo uso interno            
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               

@@ -29,15 +29,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import modeloDAO.VentasDAO;
 import utils.CentrarTextoTabla;
 import utils.LimpiarJTable;
-import utils.MyEditor;
-import utils.MyRender;
+
 
 public class ReporteVentas extends javax.swing.JInternalFrame {
 

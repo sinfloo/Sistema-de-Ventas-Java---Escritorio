@@ -42,9 +42,10 @@ public final class VentasForm extends javax.swing.JInternalFrame {
     double pre;
     double tpagar;
     public static final SpinnerModel SPINNER = new SpinnerNumberModel(1, 1, 100, 1);
-
+    private EntidadVendedor vendedor;
     public VentasForm(EntidadVendedor ev) {
         initComponents();
+        this.vendedor=ev;
         generarSerie();
         fecha();
         txtCantidad.setValue(1);
@@ -611,14 +612,13 @@ public final class VentasForm extends javax.swing.JInternalFrame {
     }
 
     void guardarVenta() {
-        int idv = 1;
         int idc = cliente.getId();
         String serie = txtSerie.getText();
         String fecha = Fecha.FechaBD();
         double monto = tpagar;
         String estado = "1";
         v.setIdCliente(idc);
-        v.setIdVendedor(idv);
+        v.setIdVendedor(vendedor.getId());
         v.setSerie(serie);
         v.setFecha(fecha);
         v.setMonto(monto);
