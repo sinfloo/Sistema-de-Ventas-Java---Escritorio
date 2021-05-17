@@ -2,6 +2,7 @@ package utils;
 
 import br.com.adilson.util.Extenso;
 import br.com.adilson.util.PrinterMatrix;
+import java.awt.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
@@ -32,7 +33,7 @@ public class Utils {
         DecimalFormat decimalFormat=new DecimalFormat("0.00");
         return decimalFormat.format(monto);
     }
-    
+
     public static void imprimir(JTable table,String celular) {
          PrinterMatrix printer = new PrinterMatrix();
 

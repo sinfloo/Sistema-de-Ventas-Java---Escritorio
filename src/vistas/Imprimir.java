@@ -339,23 +339,27 @@ public class Imprimir extends javax.swing.JInternalFrame implements Printable {
         printer.printTextWrap(6, 7, 20,26 , "CANT");
         printer.printTextWrap(6, 7, 26,31, "TOTAL");
         printer.printCharAtCol(8, 1, 31, "-");
-        int filas = table.getRowCount();
-
-        for (int i = 0; i < filas; i++) {
-            printer.printTextWrap(8 + i, 8+i, 1, 4, table.getValueAt(i, 0).toString());
-            printer.printTextWrap(8 + i, 9+i, 4, 15, table.getValueAt(i, 1).toString());
-            printer.printTextWrap(8 + i, 8+i, 16, 21, table.getValueAt(i, 2).toString());
-            printer.printTextWrap(8 + i, 8+i, 22, 24, table.getValueAt(i, 3).toString());
-            printer.printTextWrap(8 + i, 8+i, 25, 31, table.getValueAt(i, 4).toString());
+        int rowCount = table.getRowCount();
+        int row;
+        int lenHeader=8;
+       
+        for (int i = 0; i < rowCount; i++) {
+            row=(lenHeader+i);
+            printer.printTextWrap(row, 1, 1, 4, table.getValueAt(i, 0).toString());
+            printer.printTextWrap(row, 1, 4, 15, table.getValueAt(i, 1).toString());
+            printer.printTextWrap(row, 1, 16, 22, table.getValueAt(i, 2).toString());
+            printer.printTextWrap(row, 1, 23, 24, table.getValueAt(i, 3).toString());
+            printer.printTextWrap(row, 1, 25, 31, table.getValueAt(i, 4).toString());
+            lenHeader=lenHeader+1;
         }
         DecimalFormat dfoFormat = new DecimalFormat("0.00");
-        printer.printCharAtCol(filas+12, 1, 31, "-");
-        printer.printTextWrap(filas+13, filas+13, 1, 31, "SubTotal  :S/." + dfoFormat.format(io.getSubTotal()));
-        printer.printTextWrap(filas+14, filas+14, 1, 31, "IGV       :S/." + dfoFormat.format(io.getIgv()));
-        printer.printTextWrap(filas+15, filas+16, 1, 31, "Total     :S/." + io.getTotalPagar());
-        printer.printCharAtCol(filas+17, 1, 31, "-");
-        printer.printTextWrap(filas+17, filas+17, 1, 31, "Vendededor:"+io.getUserName());
-        printer.printTextWrap(filas+18, filas+18, 0, 31, "Esta ticket no tiene valor fiscal solo uso interno");
+        printer.printCharAtCol(rowCount+12, 1, 31, "-");
+        printer.printTextWrap(rowCount+13, rowCount+13, 1, 31, "SubTotal  :S/." + dfoFormat.format(io.getSubTotal()));
+        printer.printTextWrap(rowCount+14, rowCount+14, 1, 31, "IGV       :S/." + dfoFormat.format(io.getIgv()));
+        printer.printTextWrap(rowCount+15, rowCount+16, 1, 31, "Total     :S/." + io.getTotalPagar());
+        printer.printCharAtCol(rowCount+17, 1, 31, "-");
+        printer.printTextWrap(rowCount+17, rowCount+17, 1, 31, "Vendededor:"+io.getUserName());
+        printer.printTextWrap(rowCount+18, rowCount+18, 0, 31, "Esta ticket no tiene valor fiscal solo uso interno");
 
         printer.toFile(serie + ".txt");
 

@@ -23,6 +23,7 @@ import modelo.Ventas;
 import modeloDAO.VentasDAO;
 import utils.Activate;
 import utils.CentrarTextoTabla;
+import utils.Constans;
 import utils.Utils;
 
 public final class VentasForm extends javax.swing.JInternalFrame {
@@ -41,8 +42,7 @@ public final class VentasForm extends javax.swing.JInternalFrame {
     int cant;
     double pre;
     double tpagar;
-    public static final SpinnerModel SPINNER = new SpinnerNumberModel(1, 1, 100, 1);
-    private EntidadVendedor vendedor;
+    private final EntidadVendedor vendedor;
     public VentasForm(EntidadVendedor ev) {
         initComponents();
         this.vendedor=ev;
@@ -58,11 +58,10 @@ public final class VentasForm extends javax.swing.JInternalFrame {
         ImageIcon icon1 = new ImageIcon(file1.getAbsolutePath());
         Icon icono1 = new ImageIcon(icon1.getImage().getScaledInstance(160, 101, Image.SCALE_REPLICATE));
         lblImagen.setIcon(icono1);
-        txtCantidad.setModel(SPINNER);
+        txtCantidad.setModel(Constans.SPINNER);
         Activate.Of(new Component[]{btnBuscarProducto, btnAgregar, txtCodProd, txtPrecio});
         txtCodCliente.requestFocus();
     }
-
     void fecha() {
         Fecha fe = new Fecha();
         txtFecha.setText(fe.Fecha());
